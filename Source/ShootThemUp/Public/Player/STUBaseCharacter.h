@@ -33,6 +33,9 @@ protected:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Health")
   UTextRenderComponent* HealthTextComponent;
 
+  UPROPERTY(EditDefaultsOnly, Category="Animation")
+  UAnimMontage* DeathAnimMontage;
+
 public:
   ASTUBaseCharacter(const FObjectInitializer& ObjInit);
 
@@ -57,4 +60,7 @@ private:
   void MoveRight(float Amount);
   void OnStartRunning();
   void OnStopRunning();
+
+  void OnDeath();
+  void OnHealthChanged(float Health);
 };
