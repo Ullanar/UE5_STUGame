@@ -10,6 +10,8 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class USTUHealthComponent;
+class UTextRenderComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter {
@@ -18,13 +20,19 @@ class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter {
 protected:
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;
-  
+
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
   USpringArmComponent* SpringArmComponent;
-  
+
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
   UCameraComponent* CameraComponent;
-  
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+  USTUHealthComponent* HealthComponent;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Health")
+  UTextRenderComponent* HealthTextComponent;
+
 public:
   ASTUBaseCharacter(const FObjectInitializer& ObjInit);
 
@@ -32,18 +40,19 @@ public:
   virtual void Tick(float DeltaTime) override;
 
   // Called to bind functionality to input
-  virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+  virtual void SetupPlayerInputComponent(
+      class UInputComponent* PlayerInputComponent) override;
 
   UFUNCTION(BlueprintCallable, Category="Movement")
   bool IsRunning() const;
 
   UFUNCTION(BlueprintCallable, Category="Movement")
   float GetMovementDirection() const;
-  
+
 private:
   bool IsPlayerWantsToRun = false;
   bool IsMovingForward = false;
-  
+
   void MoveForward(float Amount);
   void MoveRight(float Amount);
   void OnStartRunning();
